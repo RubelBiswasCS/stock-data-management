@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="smda-home">   
+   <div class="table-responsive">
+      <table class="table table-sm ">
+         <thead > 
+         <tr>
+            <th scope="col">No</th>
+            <th scope="col">Date</th>
+            <th scope="col">Trade Code</th>
+            <th scope="col">High</th>
+            <th scope="col">Low</th>
+            <th scope="col">Open</th>
+            <th scope="col">Close</th>
+            <th scope="col">Volume</th>
+         </tr>
+         </thead>
+         <tbody>
+            {% for row in data %}
+            <tr>
+               <th scope="row">{{ forloop.counter }}</th>
+               <td>{{ row.date }}</td>
+               <td>{{ row.trade_code }}</td>
+               <td>{{ row.high }}</td>
+               <td>{{ row.low }}</td>
+               <td>{{ row.open }}</td>
+               <td>{{ row.close }}</td>
+               <td>{{ row.volume }}</td>
+            </tr>
+           
+            {% empty %}
+            <tr>
+               <td colspan="8">{{ row.date }}</td>
+            </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+   </div>
+</div>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

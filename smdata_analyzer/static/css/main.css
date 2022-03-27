@@ -1,0 +1,9 @@
+.smda-home{
+    display: flex;
+}
+
+.table thead tr th{
+    background-color: #ad6c80;
+    color: #373737;
+  }
+  
