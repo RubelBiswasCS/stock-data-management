@@ -1,4 +1,3 @@
-from operator import mod
 from django.db import models
 
 class Stock(models.Model):
@@ -8,4 +7,4 @@ class Stock(models.Model):
     low = models.FloatField()
     open = models.FloatField()
     close = models.FloatField()
-    volume = models.IntegerField()
+    volume = models.CharField(max_length=25)
