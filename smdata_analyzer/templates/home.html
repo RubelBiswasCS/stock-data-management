@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="smda-home">   
+<div class="container-fluid">   
    <div class="table-responsive">
       <table class="table table-sm ">
          <thead > 
@@ -14,29 +14,96 @@
             <th scope="col">Open</th>
             <th scope="col">Close</th>
             <th scope="col">Volume</th>
+            <th scope="col" colspan="3">Actions</th>
          </tr>
          </thead>
-         <tbody>
-            {% for row in data %}
-            <tr>
-               <th scope="row">{{ forloop.counter }}</th>
-               <td>{{ row.date }}</td>
-               <td>{{ row.trade_code }}</td>
-               <td>{{ row.high }}</td>
-               <td>{{ row.low }}</td>
-               <td>{{ row.open }}</td>
-               <td>{{ row.close }}</td>
-               <td>{{ row.volume }}</td>
-            </tr>
-           
-            {% empty %}
-            <tr>
-               <td colspan="8">{{ row.date }}</td>
-            </tr>
-            {% endfor %}
+         <tbody >
+            
          </tbody>
       </table>
    </div>
+
+<!-- dialog for edit table  -->
+   
+
+   <div class="modal fade" id="stockDataModal" tabindex="-1" aria-labelledby="stockDataModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="stockDataModalLabel">Update Data</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <form>
+               <div class="mb-3">
+                  <label for="date" class="col-form-label">	Date:</label>
+                  <input type="text" class="form-control" id="date">
+               </div>
+               <div class="mb-3">
+                  <label for="high" class="col-form-label">	High:</label>
+                  <input type="text" class="form-control" id="high">
+               </div>
+               <div class="mb-3">
+                  <label for="low" class="col-form-label">	Low:</label>
+                  <input type="text" class="form-control" id="low">
+               </div>
+               <div class="mb-3">
+                  <label for="open" class="col-form-label">	Open:</label>
+                  <input type="text" class="form-control" id="open">
+               </div>
+               <div class="mb-3">
+                  <label for="close" class="col-form-label"> Close:</label>
+                  <input type="text" class="form-control" id="close">
+               </div>
+               <div class="mb-3">
+                  <label for="trade-code" class="col-form-label">Trade Code:</label>
+                  <input type="text" class="form-control" id="trade-code">
+                  <!-- <textarea class="form-control" id="trade-code"></textarea>
+               </div> -->
+            </form>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success">Save</button>
+            </div>
+         </div>
+      </div>
+   </div>
 </div>
-<script src="{% static 'js/main.js' %}"></script>
+<script>
+
+   //testAlert('test')
+   const baseUrl = '/api/stock';
+   fetch(baseUrl+'/?page=3187&page_size=5')
+       .then(response => response.json())
+       .then(result => {
+           const stockData = result.results;
+           console.log(stockData)
+           const dataList = document.getElementsByTagName("tbody")[0];
+           stockData.forEach((row,i) => {
+            dataList.innerHTML += `
+            <tr id='row-${ row.id }'>
+               <th scope="row">${i+1}</th>
+               <td>${ row.date }</td>
+               <td>${ row.trade_code }</td>
+               <td>${ row.high }</td>
+               <td>${ row.low }</td>
+               <td>${ row.open }</td>
+               <td>${ row.close }</td>
+               <td>${ row.volume }</td>
+               <td>
+                  <button type="button" id="delete-btn-${ row.id }" data-pk="${ row.id }" class="btn btn-outline-danger btn-sm delete-btn" >Delete</button>
+                  <button type="button" id="update-btn-${ row.id }" data-pk="${ row.id }" class="btn btn-outline-warning btn-sm update-btn" data-bs-toggle="modal" data-bs-target="#stockDataModal" data-bs-whatever="@mdo">Update</button>
+               </td>
+            </tr>`;
+           })
+           handleActions(stockData);
+           //console.log(stockData)
+       })
+
+
+
+
+</script>
+<!-- <script src="{% static 'js/main.js' %}"></script> -->
 {% endblock %}

@@ -5,5 +5,11 @@
 .table thead tr th{
     background-color: #ad6c80;
     color: #373737;
+    text-align: center;
   }
+
+.table tbody tr th, .table tbody tr td{
+    text-align: center;
+    vertical-align:middle;
+}
   
