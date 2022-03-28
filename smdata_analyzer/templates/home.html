@@ -5,7 +5,7 @@
    <div class="table-responsive">
       <table class="table table-sm ">
          <thead > 
-         <tr>
+         <tr >
             <th scope="col">No</th>
             <th scope="col">Date</th>
             <th scope="col">Trade Code</th>
@@ -34,10 +34,14 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <form>
+            <form id="myForm" data-id="">
                <div class="mb-3">
                   <label for="date" class="col-form-label">	Date:</label>
                   <input type="text" class="form-control" id="date">
+               </div>
+               <div class="mb-3">
+                  <label for="trade_code" class="col-form-label">Trade Code:</label>
+                  <input type="text" class="form-control" id="trade_code">
                </div>
                <div class="mb-3">
                   <label for="high" class="col-form-label">	High:</label>
@@ -56,15 +60,15 @@
                   <input type="text" class="form-control" id="close">
                </div>
                <div class="mb-3">
-                  <label for="trade-code" class="col-form-label">Trade Code:</label>
-                  <input type="text" class="form-control" id="trade-code">
-                  <!-- <textarea class="form-control" id="trade-code"></textarea>
-               </div> -->
+                  <label for="volume" class="col-form-label">Volume:</label>
+                  <input type="text" class="form-control" id="volume">
+                  <!-- <textarea class="form-control" id="trade-code"></textarea>  -->
+               </div>
             </form>
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success">Save</button>
+            <button id="commit-update" type="button" class="btn btn-success">Save</button>
             </div>
          </div>
       </div>
@@ -74,7 +78,7 @@
 
    //testAlert('test')
    const baseUrl = '/api/stock';
-   fetch(baseUrl+'/?page=3187&page_size=5')
+   fetch(baseUrl+'/?page=3186&page_size=5')
        .then(response => response.json())
        .then(result => {
            const stockData = result.results;
@@ -82,7 +86,7 @@
            const dataList = document.getElementsByTagName("tbody")[0];
            stockData.forEach((row,i) => {
             dataList.innerHTML += `
-            <tr id='row-${ row.id }'>
+            <tr id='row-${ row.id }' data-id="${row.id}">
                <th scope="row">${i+1}</th>
                <td>${ row.date }</td>
                <td>${ row.trade_code }</td>
