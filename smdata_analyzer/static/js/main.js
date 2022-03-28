@@ -4,9 +4,22 @@ const handleActions = (stockData) => {
     const deleteBtns = document.getElementsByClassName('delete-btn');
     const updateBtns = document.getElementsByClassName('update-btn');
     const commitUpdateBtn = document.getElementById('commit-update');
+    // const formNew = document.getElementsByTagName('form')[0]
+    // const formDataId = formNew.dataset.id
+   
+    //console.log("formDataId: ",formDataId)
     commitUpdateBtn.addEventListener('click', (e) => {
-      commitUpdate(baseUrl);
-      console.log('updated successfully')
+        commitUpdate(baseUrl);
+        console.log('updated successfully')
+      // if(formDataId.dataset.id){
+      //   commitUpdate(baseUrl);
+      //   console.log('updated successfully')
+      // }else{
+      //   createNew(baseUrl);
+      //   console.log('createed sucessfull')
+      // }
+      
+     
     })
     // const form = document.getElementsByTagName('form')[0].elements
     // for (var item of form) {
@@ -99,6 +112,9 @@ function deleteData(id, url, element) {
 function commitUpdate(url){
   const form = document.getElementsByTagName('form')[0]
   const id = form.dataset.id
+  if(id == -1){
+    return  createNew(url);
+  }
   //const formData = new FormData(form);
   const element = document.getElementById(`row-${id}`)
 
@@ -148,6 +164,45 @@ function commitUpdate(url){
           <button type="button" id="update-btn-${ row.id }" data-pk="${ row.id }" class="btn btn-outline-warning btn-sm update-btn" data-bs-toggle="modal" data-bs-target="#stockDataModal" data-bs-whatever="@mdo">Update</button>
         </td>`;
         // console.log("el phase 3: ", element);
+      console.log(response);
+    })
+  .catch(err => {
+    console.error(err)
+  })
+}
+
+//create new
+
+function createNew(url){
+  // const form = document.getElementsByTagName('form')[0]
+  // const id = form.dataset.id
+  const date = document.getElementById('date').value
+  const trade_code = document.getElementById('trade_code').value
+  const high = document.getElementById('high').value
+  const low = document.getElementById('low').value
+  const open = document.getElementById('open').value
+  const close = document.getElementById('close').value
+  const volume = document.getElementById('volume').value
+  const newData = {
+    "date": date,
+    "trade_code": trade_code,
+    "high": high,
+    "low": low,
+    "open": open,
+    "close": close,
+    "volume": volume
+  }
+  fetch(url+'/', {
+    method: 'post',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newData),
+  })
+  .then((response) => response.json())
+  .then((response) => {
+      console.log('created successfully');
       console.log(response);
     })
   .catch(err => {

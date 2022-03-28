@@ -22,7 +22,7 @@
          </tbody>
       </table>
    </div>
-
+   <button type="button" id="create" data-pk="" class="btn btn-primary btn-lg create-btn" data-bs-toggle="modal" data-bs-target="#stockDataModal" data-bs-whatever="@mdo">Create</button>
 <!-- dialog for edit table  -->
    
 
@@ -30,11 +30,11 @@
       <div class="modal-dialog">
          <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="stockDataModalLabel">Update Data</h5>
+            <h5 class="modal-title" id="stockDataModalLabel">Create/Update</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <form id="myForm" data-id="">
+            <form id="myForm" data-id="-1">
                <div class="mb-3">
                   <label for="date" class="col-form-label">	Date:</label>
                   <input type="text" class="form-control" id="date">
