@@ -4,7 +4,28 @@ const handleActions = (stockData) => {
   const deleteBtns = document.getElementsByClassName('delete-btn');
   const updateBtns = document.getElementsByClassName('update-btn');
   const commitUpdateBtn = document.getElementById('commit-update');
+  const createBtn = document.getElementById('create');
 
+  createBtn.addEventListener('click', (e) => {
+    console.log('create btn clicked')
+    const date = document.getElementById('date')
+    const trade_code = document.getElementById('trade_code')
+    const high = document.getElementById('high')
+    const low = document.getElementById('low')
+    const open = document.getElementById('open')
+    const close = document.getElementById('close')
+    const volume = document.getElementById('volume')
+    const form = document.getElementsByTagName('form')[0]
+    date.value = ''
+    trade_code.value = ""
+    high.value = ""
+    low.value = ""
+    open.value = ""
+    close.value = ""
+    volume.value = ""
+    form.dataset.id = "-1"
+
+  })
   commitUpdateBtn.addEventListener('click', (e) => {
     commitUpdate(baseUrl);
     console.log('updated successfully')
